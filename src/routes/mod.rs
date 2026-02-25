@@ -1,4 +1,4 @@
-use actix_web::{get, post, delete, web, HttpResponse, Responder, dev::forward};
+use actix_web::{get, post, delete, web, HttpResponse, Responder};
 use actix_web::web::Query;
 use serde::{Deserialize, Serialize};
 use sqlx::SqlitePool;
@@ -20,7 +20,7 @@ fn check_api_auth(req: &actix_web::HttpRequest) -> Result<(), HttpResponse> {
     if !is_authenticated {
         return Err(HttpResponse::Unauthorized().json(serde_json::json!({
             "error": "Authentication required"
-        }));
+        })));
     }
     Ok(())
 }

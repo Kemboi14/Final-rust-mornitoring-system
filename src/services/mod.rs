@@ -87,7 +87,7 @@ impl MetricsService {
         }
 
         // Discover available charts from Netdata with size limits
-        async fn discover_charts(client: &Client, url: &str) -> Result<Vec<String>, MetricsError> {
+        async fn discover_charts(_client: &Client, url: &str) -> Result<Vec<String>, MetricsError> {
             // Create a client with shorter timeout for discovery
             let discovery_client = Client::builder()
                 .timeout(Duration::from_secs(10)) // Shorter timeout for discovery
@@ -645,7 +645,7 @@ impl MetricsService {
         .fetch_one(&self.pool)
         .await?;
         
-        if rows_affected > 0 {
+        if rows_affected.unwrap_or(0) > 0 {
             warn!("🚨 Alert created: {} - {} (Server: {})", alert_type, message, server_id);
         }
         
